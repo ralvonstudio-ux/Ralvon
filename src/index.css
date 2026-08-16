@@ -1,0 +1,92 @@
+@import "./styles/tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-graphite/15;
+  }
+
+  html {
+    scroll-behavior: auto;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Fallback for the rare native-triggered anchor jump Lenis's click handler
+     doesn't catch (e.g. restoring a #hash from browser history). Lenis owns
+     the primary smooth-scroll path via lenis.scrollTo(). */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    @apply bg-ivory text-ink font-body antialiased;
+    font-feature-settings: "ss01" 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--ivory);
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .skip-link {
+    @apply fixed left-4 top-4 z-[100] -translate-y-24 bg-ink text-ivory px-4 py-3 text-sm font-body rounded-none transition-transform duration-200;
+  }
+
+  .skip-link:focus {
+    @apply translate-y-0;
+  }
+}
+
+@layer utilities {
+  .container-edge {
+    @apply mx-auto w-full max-w-container px-[var(--gutter)];
+  }
+
+  .section-y {
+    padding-top: var(--section-y);
+    padding-bottom: var(--section-y);
+  }
+
+  .line-cap {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  /* Each top-level section fills at least one screen — an editorial full-bleed
+     rhythm, not a scroll-snap mechanism (removed: it fought natural scrolling). */
+  .window-section {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+}
+
+/* Custom cursor: only enabled on fine-pointer, non-touch, motion-safe devices via JS class toggle */
+.has-custom-cursor {
+  cursor: none;
+}
+
+.has-custom-cursor a,
+.has-custom-cursor button {
+  cursor: none;
+}
